@@ -35,16 +35,16 @@ async function drawViz(data) {
   let container = document.getElementById('container');
   if (!container) {
     container = document.createElement('div');
-      container.id = 'container';
+    container.id = 'container';
     document.body.appendChild(container);
   }
 
-  /*
-  const color = data.style.barColor.value
-  ? data.style.barColor.value.color
-  : data.style.barColor.defaultValue;
-  */
-  const plotBands = [];
+  const plotBands = [{
+    from: data.style['yAxis.min'].value,
+    to: data.style['yAxis.max'].value,
+    color: Highcharts.getOptions().colors[0],
+    thickness: '15%'
+  }];
   ['band1', 'band2', 'band3'].forEach(id => {
     const enabled = data.style[`${id}Enabled`].value,
       color = data.style[`${id}Color`].value.color,
@@ -54,15 +54,16 @@ async function drawViz(data) {
     if (
       enabled && color && typeof from === 'number' && typeof to === 'number'
     ) {
-      plotBands.push({ from, to, color });
+      plotBands.push({
+        from,
+        to,
+        color,
+        thickness: '15%'
+      });
     }
   });
 
-  // Get the human-readable name of the metric and dimension
-
-  // var metricName = data.fields['gaugeMetric'][0].name;
-  // var dimensionName = data.fields['gaugeDimension'][0].name;
-
+  // Create the chart
   Highcharts.chart('container', {
     chart: {
       width: dscc.getWidth() - 1,
@@ -80,10 +81,20 @@ async function drawViz(data) {
     yAxis: {
       min: data.style['yAxis.min'].value,
       max: data.style['yAxis.max'].value,
-      tickPixelInterval: 50,
+      tickPixelInterval: 72,
+      tickPosition: 'inside',
+      tickColor: '#ffffff',
+      tickLength: 50,
       tickWidth: 2,
+      minorTickInterval: null,
+      /*
       minorTickLength: 3,
       minorTickColor: '#ccd6eb',
+      minorTickPosition: 'outside',
+      */
+      labels: {
+        distance: 20
+      },
       title: {
         text: null
       },
@@ -96,7 +107,20 @@ async function drawViz(data) {
         style: {
           fontSize: '1.2rem'
         }
-      }
+      },
+
+      dial: {
+        radius: '80%',
+        backgroundColor: 'gray',
+        baseWidth: 12,
+        baseLength: '0%',
+        rearLength: '0%'
+      },
+      pivot: {
+        backgroundColor: 'gray',
+        radius: 6
+      },
+      overshoot: 5
     }]
   });
 
