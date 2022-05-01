@@ -108,7 +108,7 @@ async function drawViz(data) {
           fontSize: '1.2rem'
         }
       },
-
+      name: data.fields['gaugeMetric'][0].name,
       dial: {
         radius: '80%',
         backgroundColor: 'gray',
