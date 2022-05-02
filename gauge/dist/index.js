@@ -130,7 +130,7 @@ async function drawViz(data) {
       plotBands
     },
     series: [{
-      data: [1623456],// [Number(rowData[0].gaugeMetric[0])],
+      data: [Number(rowData[0].gaugeMetric[0])],
       dataLabels: {
         borderWidth: 0,
         style: {
