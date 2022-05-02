@@ -33,13 +33,13 @@
         {
           "type": "INTERVAL",
           "label": "Minimum gauge value",
-          "id": "yAxis.min",
+          "id": "yAxis_min",
           "defaultValue": 0
         },
         {
           "type": "INTERVAL",
           "label": "Maximum gauge value",
-          "id": "yAxis.max",
+          "id": "yAxis_max",
           "defaultValue": 100
         }
       ]

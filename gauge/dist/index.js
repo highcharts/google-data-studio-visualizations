@@ -66,8 +66,8 @@ async function drawViz(data) {
   }
 
   const plotBands = [{
-    from: data.style['yAxis.min'].value,
-    to: data.style['yAxis.max'].value,
+    from: data.style['yAxis_min'].value,
+    to: data.style['yAxis_max'].value,
     color: Highcharts.getOptions().colors[0],
     thickness: '15%'
   }];
@@ -89,6 +89,7 @@ async function drawViz(data) {
     }
   });
 
+  console.log('data.style', data.style)
   // Create the chart
   Highcharts.chart('container', {
     chart: {
@@ -105,8 +106,8 @@ async function drawViz(data) {
       background: null
     },
     yAxis: {
-      min: data.style['yAxis.min'].value,
-      max: data.style['yAxis.max'].value,
+      min: data.style['yAxis_min'].value,
+      max: data.style['yAxis_max'].value,
       tickPixelInterval: 72,
       tickPosition: 'inside',
       tickColor: '#ffffff',
