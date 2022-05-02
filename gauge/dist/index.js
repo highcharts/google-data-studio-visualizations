@@ -130,12 +130,35 @@ async function drawViz(data) {
       plotBands
     },
     series: [{
-      data: [Number(rowData[0].gaugeMetric[0])],
+      data: [1623456],// [Number(rowData[0].gaugeMetric[0])],
       dataLabels: {
         borderWidth: 0,
         style: {
           fontSize: '1.2rem'
-        }
+        },
+        formatter: function () {
+          if (data.style['compactNumbers'].value) {
+            if (this.y > 9999999) {
+              return Highcharts.numberFormat(
+                Math.floor(this.y / 1000000),
+                0
+              ) + 'M';
+            }
+            if (this.y > 9999) {
+              return Highcharts.numberFormat(
+                Math.floor(this.y / 1000),
+                0
+              ) + 'k';
+            }
+
+          }
+
+          return Highcharts.numberFormat(
+            this.y,
+            data.style['decimals'].value
+          );
+        },
+        y: 50
       },
       name: data.fields['gaugeMetric'][0].name,
       dial: {
