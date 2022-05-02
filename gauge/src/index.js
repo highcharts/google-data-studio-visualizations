@@ -109,6 +109,10 @@ async function drawViz(data) {
         borderWidth: 0,
         style: {
           fontSize: '1.2rem'
+        },
+        formatter: ctx => {
+          console.log('@formatter', ctx)
+          return ctx.y;
         }
       },
       name: data.fields['gaugeMetric'][0].name,

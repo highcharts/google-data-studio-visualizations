@@ -45,6 +45,23 @@
       ]
     },
     {
+      "id": "dataLabel",
+      "label": "Primary label",
+      "elements": [
+        {
+          "type": "CHECKBOX",
+          "label": "Compact numbers",
+          "id": "compactNumbers",
+          "defaultValue": true
+        },
+        {
+          "type": "INTERVAL",
+          "label": "Decimal precision",
+          "id": "decimals"
+        }
+      ]
+    },
+    {
       "id": "band1",
       "label": "Band 1",
       "elements": [
