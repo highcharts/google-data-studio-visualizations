@@ -142,25 +142,29 @@ async function drawViz(data) {
           fontSize: '1.2rem'
         },
         formatter: function () {
+          let ret = Highcharts.numberFormat(
+            this.y,
+            data.style['decimals'].value
+          );
           if (data.style['compactNumbers'].value) {
             if (this.y > 9999999) {
-              return Highcharts.numberFormat(
+              ret = Highcharts.numberFormat(
                 Math.floor(this.y / 1000000),
                 0
               ) + 'M';
-            }
-            if (this.y > 9999) {
-              return Highcharts.numberFormat(
+            } else if (this.y > 9999) {
+              ret = Highcharts.numberFormat(
                 Math.floor(this.y / 1000),
                 0
               ) + 'k';
             }
-
           }
 
-          return Highcharts.numberFormat(
-            this.y,
-            data.style['decimals'].value
+          console.log(data.style)
+          return (
+            data.style['dataLabel_prefix'].value +
+            ret +
+            data.style['dataLabel_suffix'].value
           );
         }
       },

@@ -70,6 +70,16 @@
           "type": "INTERVAL",
           "label": "Decimal precision",
           "id": "decimals"
+        },
+        {
+          "type": "TEXTINPUT",
+          "label": "Prefix",
+          "id": "dataLabel_prefix"
+        },
+        {
+          "type": "TEXTINPUT",
+          "label": "Suffix",
+          "id": "dataLabel_suffix"
         }
       ]
     },
