@@ -31,7 +31,17 @@ async function drawViz(data) {
   const Highcharts = await loadHighcharts();
 
   const min = data.style['yAxis_min'].value,
-    max = data.style['yAxis_max'].value;
+    max = data.style['yAxis_max'].value,
+    angle = Math.max(
+      Math.abs(data.style['yAxis_startAngle'].value),
+      Math.abs(data.style['yAxis_endAngle'].value)
+    ),
+    slope = (50 - 75) / (180 - 90),
+    centerY = (angle - 90) / slope;
+
+
+  // 90 => 75
+  // 180 => 50
 
   let rowData = data.tables.DEFAULT;
 
@@ -71,7 +81,8 @@ async function drawViz(data) {
     chart: {
       width: dscc.getWidth() - 1,
       height: dscc.getHeight() - 1,
-      type: 'gauge'
+      type: 'gauge',
+      plotBorderWidth: 1
     },
     title: {
       text: null
@@ -79,7 +90,8 @@ async function drawViz(data) {
     pane: {
       startAngle: data.style['yAxis_startAngle'].value,
       endAngle: data.style['yAxis_endAngle'].value,
-      background: null
+      background: null,
+      center: ['50%', `${centerY}%`]
     },
     yAxis: {
       min,
