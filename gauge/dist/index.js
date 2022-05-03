@@ -71,7 +71,7 @@ async function drawViz(data) {
   const plotBands = [{
     from: min,
     to: max,
-    color: Highcharts.getOptions().colors[0],
+    color: '#e6e6e6',
     thickness: '15%'
   }];
   ['band1', 'band2', 'band3'].forEach(id => {
@@ -103,8 +103,8 @@ async function drawViz(data) {
       text: null
     },
     pane: {
-      startAngle: -150,
-      endAngle: 150,
+      startAngle: data.style['yAxis_startAngle'].value,
+      endAngle: data.style['yAxis_endAngle'].value,
       background: null
     },
     yAxis: {
@@ -116,13 +116,11 @@ async function drawViz(data) {
       tickLength: 50,
       tickWidth: 2,
       minorTickInterval: null,
-      /*
-      minorTickLength: 3,
-      minorTickColor: '#ccd6eb',
-      minorTickPosition: 'outside',
-      */
       labels: {
-        distance: 20
+        distance: 20,
+        style: {
+          fontSize: '14px'
+        }
       },
       title: {
         text: null
@@ -157,8 +155,7 @@ async function drawViz(data) {
             this.y,
             data.style['decimals'].value
           );
-        },
-        y: 50
+        }
       },
       name: data.fields['gaugeMetric'][0].name,
       dial: {

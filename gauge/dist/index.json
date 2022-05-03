@@ -41,6 +41,18 @@
           "label": "Maximum gauge value",
           "id": "yAxis_max",
           "defaultValue": 100
+        },
+        {
+          "type": "INTERVAL",
+          "label": "Start angle",
+          "id": "yAxis_startAngle",
+          "defaultValue": -90
+        },
+        {
+          "type": "INTERVAL",
+          "label": "End angle",
+          "id": "yAxis_endAngle",
+          "defaultValue": 90
         }
       ]
     },
