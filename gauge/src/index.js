@@ -36,12 +36,7 @@ async function drawViz(data) {
       Math.abs(data.style['yAxis_startAngle'].value),
       Math.abs(data.style['yAxis_endAngle'].value)
     ),
-    slope = (50 - 75) / (180 - 90),
-    centerY = (angle - 90) / slope;
-
-
-  // 90 => 75
-  // 180 => 50
+    centerY = Math.min(75, Math.max(50, 75 - (angle - 90) * 0.3));
 
   let rowData = data.tables.DEFAULT;
 
