@@ -103,7 +103,7 @@ async function drawViz(data) {
       width: dscc.getWidth() - 1,
       height: dscc.getHeight() - 1,
       type: 'gauge',
-      plotBorderWidth: 1
+      backgroundColor: 'transparent'
     },
     title: {
       text: null
