@@ -62,7 +62,8 @@ async function drawViz(data) {
       Math.abs(data.style['yAxis_startAngle'].value),
       Math.abs(data.style['yAxis_endAngle'].value)
     ),
-    centerY = Math.min(70, Math.max(50, 70 - (angle - 90) * 0.3));
+    centerY = Math.min(70, Math.max(50, 70 - (angle - 90) * 0.3)),
+    useBandsForAxis = data.style['yAxis_useBandsForAxis'].value;
 
   let rowData = data.tables.DEFAULT;
 
@@ -79,6 +80,7 @@ async function drawViz(data) {
     color: '#e6e6e6',
     thickness: '15%'
   }];
+  let tickPositions = [];
   ['band1', 'band2', 'band3'].forEach(id => {
     const enabled = data.style[`${id}Enabled`].value,
       color = data.style[`${id}Color`].value.color,
@@ -94,8 +96,17 @@ async function drawViz(data) {
         color,
         thickness: '15%'
       });
+
+      tickPositions.push(from, to);
     }
   });
+
+  // Unique values
+  if (!useBandsForAxis || tickPositions.length === 0) {
+    tickPositions = undefined;
+  } else {
+    tickPositions = [...new Set(tickPositions)];
+  }
 
   // Create the chart
   Highcharts.chart('container', {
@@ -119,6 +130,7 @@ async function drawViz(data) {
       max,
       tickPixelInterval: 72,
       tickPosition: 'inside',
+      tickPositions,
       tickColor: '#ffffff',
       tickLength: 50,
       tickWidth: 2,

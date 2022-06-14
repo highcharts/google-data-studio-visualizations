@@ -57,6 +57,18 @@
       ]
     },
     {
+      "id": "yAxis",
+      "label": "Scale labels",
+      "elements": [
+        {
+          "type": "CHECKBOX",
+          "label": "Place labels on bands",
+          "id": "yAxis_useBandsForAxis",
+          "defaultValue": false
+        }
+      ]
+    },
+    {
       "id": "dataLabel",
       "label": "Primary label",
       "elements": [
