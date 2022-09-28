@@ -56,16 +56,32 @@ async function drawViz(data) {
 
   const Highcharts = await loadHighcharts();
 
-  const min = data.style['yAxis_min'].value,
-    max = data.style['yAxis_max'].value,
+  const compactNumbers = (num) => {
+    if (num > 9999999) {
+      return Highcharts.numberFormat(
+        Math.floor(num / 1000000),
+        0
+      ) + 'M';
+    }
+    if (num > 9999) {
+      return Highcharts.numberFormat(
+        Math.floor(num / 1000),
+        0
+      ) + 'k';
+    }
+    return num;
+  }
+
+  let rowData = data.tables.DEFAULT;
+
+  const min = 0,
+    max = rowData[0].maximum[0],
     angle = Math.max(
       Math.abs(data.style['yAxis_startAngle'].value),
       Math.abs(data.style['yAxis_endAngle'].value)
     ),
     centerY = Math.min(70, Math.max(50, 70 - (angle - 90) * 0.3)),
     useBandsForAxis = data.style['yAxis_useBandsForAxis'].value;
-
-  let rowData = data.tables.DEFAULT;
 
   let container = document.getElementById('container');
   if (!container) {
@@ -81,11 +97,14 @@ async function drawViz(data) {
     thickness: '15%'
   }];
   let tickPositions = [];
-  ['band1', 'band2', 'band3'].forEach(id => {
-    const enabled = data.style[`${id}Enabled`].value,
+  const targetNames = ['band1Start', 'band2Start', 'band3Start', 'maximum'];
+  ['band1', 'band2', 'band3'].forEach((id, i) => {
+    const targetName = targetNames[i],
+      endTargetName = targetNames[i + 1],
+      enabled = data.style[`${id}Enabled`].value,
       color = data.style[`${id}Color`].value.color,
-      from = Math.max(min, data.style[`${id}From`].value),
-      to = Math.min(max, data.style[`${id}To`].value);
+      from = Math.max(min, rowData[0][targetName][0]),
+      to = Math.min(max, rowData[0][endTargetName][0]);
 
     if (
       enabled && color && typeof from === 'number' && typeof to === 'number'
@@ -137,6 +156,15 @@ async function drawViz(data) {
       minorTickInterval: null,
       labels: {
         distance: 20,
+        formatter: function () {
+          const label = this.axis.defaultLabelFormatter.call(this);
+
+          if (data.style['compactNumbers'].value && useBandsForAxis) {
+            return compactNumbers(this.value);
+          }
+
+          return label;
+        },
         style: {
           fontSize: '14px'
         }
@@ -147,7 +175,18 @@ async function drawViz(data) {
       plotBands
     },
     series: [{
-      data: [Number(rowData[0].gaugeMetric[0])],
+      data: [
+        {
+          y: rowData[0].forecast[0],
+          dial: {
+            backgroundColor: '#ddd'
+          },
+          dataLabels: {
+            enabled: false
+          }
+        },
+        Number(rowData[0].actualValue[0])
+      ],
       dataLabels: {
         borderWidth: 0,
         style: {
@@ -159,20 +198,9 @@ async function drawViz(data) {
             data.style['decimals'].value
           );
           if (data.style['compactNumbers'].value) {
-            if (this.y > 9999999) {
-              ret = Highcharts.numberFormat(
-                Math.floor(this.y / 1000000),
-                0
-              ) + 'M';
-            } else if (this.y > 9999) {
-              ret = Highcharts.numberFormat(
-                Math.floor(this.y / 1000),
-                0
-              ) + 'k';
-            }
+            ret = compactNumbers(this.y);
           }
 
-          console.log(data.style)
           return (
             data.style['dataLabel_prefix'].value +
             ret +
@@ -180,7 +208,7 @@ async function drawViz(data) {
           );
         }
       },
-      name: data.fields['gaugeMetric'][0].name,
+      name: data.fields['actualValue'][0].name,
       dial: {
         radius: '80%',
         backgroundColor: 'gray',
@@ -215,15 +243,15 @@ async function drawViz(data) {
   let largestMetric = 0;
 
   rowData.forEach(function (row) {
-    largestMetric = Math.max(largestMetric, row["gaugeMetric"][0]);
+    largestMetric = Math.max(largestMetric, row["actualValue"][0]);
   });
 
   rowData.forEach(function (row, i) {
-    // 'gaugeDimension' and 'gaugeMetric' come from the id defined in myViz.json
+    // 'gaugeDimension' and 'actualValue' come from the id defined in myViz.json
     // 'dimId' is Data Studio's unique field ID, used for the filter interaction
     const barData = {
       dim: row["gaugeDimension"][0],
-      met: row["gaugeMetric"][0],
+      met: row["actualValue"][0],
       dimId: data.fields["gaugeDimension"][0].id
     };
 
@@ -263,7 +291,7 @@ async function drawViz(data) {
 
   // Get the human-readable name of the metric and dimension
 
-  var metricName = data.fields['gaugeMetric'][0].name;
+  var metricName = data.fields['actualValue'][0].name;
   var dimensionName = data.fields['gaugeDimension'][0].name;
 
   titleElement.innerText = metricName + ' by ' + dimensionName;

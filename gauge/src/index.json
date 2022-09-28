@@ -14,8 +14,53 @@
           }
         },
         {
-          "id": "gaugeMetric",
-          "label": "Metric",
+          "id": "actualValue",
+          "label": "Actual Value",
+          "type": "METRIC",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "forecast",
+          "label": "Forecast",
+          "type": "METRIC",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "band1Start",
+          "label": "Band 1 start",
+          "type": "METRIC",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "band2Start",
+          "label": "Band 2 start",
+          "type": "METRIC",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "band3Start",
+          "label": "Band 3 start",
+          "type": "METRIC",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "maximum",
+          "label": "Maximum",
           "type": "METRIC",
           "options": {
             "min": 1,
@@ -28,20 +73,8 @@
   "style": [
     {
       "id": "range",
-      "label": "Gauge range",
+      "label": "Gauge view",
       "elements": [
-        {
-          "type": "INTERVAL",
-          "label": "Minimum gauge value",
-          "id": "yAxis_min",
-          "defaultValue": 0
-        },
-        {
-          "type": "INTERVAL",
-          "label": "Maximum gauge value",
-          "id": "yAxis_max",
-          "defaultValue": 100
-        },
         {
           "type": "INTERVAL",
           "label": "Start angle",
@@ -109,16 +142,6 @@
           "label": "Color",
           "id": "band1Color",
           "defaultValue": "#55BF3B"
-        },
-        {
-          "type": "INTERVAL",
-          "label": "Range from",
-          "id": "band1From"
-        },
-        {
-          "type": "INTERVAL",
-          "label": "Range to",
-          "id": "band1To"
         }
       ]
     },
@@ -136,16 +159,6 @@
           "label": "Color",
           "id": "band2Color",
           "defaultValue": "#DDDF0D"
-        },
-        {
-          "type": "INTERVAL",
-          "label": "Range from",
-          "id": "band2From"
-        },
-        {
-          "type": "INTERVAL",
-          "label": "Range to",
-          "id": "band2To"
         }
       ]
     },
@@ -163,16 +176,6 @@
           "label": "Color",
           "id": "band3Color",
           "defaultValue": "#DF5353"
-        },
-        {
-          "type": "INTERVAL",
-          "label": "Range from",
-          "id": "band3From"
-        },
-        {
-          "type": "INTERVAL",
-          "label": "Range to",
-          "id": "band3To"
         }
       ]
     }
