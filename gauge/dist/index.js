@@ -69,7 +69,10 @@ async function drawViz(data) {
         0
       ) + 'k';
     }
-    return num;
+    return Highcharts.numberFormat(
+      num,
+      data.style['decimals'].value
+    );
   }
 
   let rowData = data.tables.DEFAULT;
@@ -126,6 +129,9 @@ async function drawViz(data) {
   } else {
     tickPositions = [...new Set(tickPositions)];
   }
+
+  console.log('compactNumbers', data.style['compactNumbers'],
+  rowData[0].actualValue[0]);
 
   // Create the chart
   Highcharts.chart('container', {

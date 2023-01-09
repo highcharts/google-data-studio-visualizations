@@ -15,9 +15,9 @@
       "iconUrl": "https://raw.githubusercontent.com/googledatastudio/community-visualizations/master/docs/codelab/img/bar_chart.png",
       "description": "Highcharts Gauge",
       "resource": {
-        "js": "gs://highcharts-data-studio-visualizations/gauge-dev/index.js",
-        "config": "gs://highcharts-data-studio-visualizations/gauge-dev/index.json",
-        "css": "gs://highcharts-data-studio-visualizations/gauge-dev/index.css"
+        "js": "gs://highcharts-data-studio-visualizations/gauge-prod/index.js",
+        "config": "gs://highcharts-data-studio-visualizations/gauge-prod/index.json",
+        "css": "gs://highcharts-data-studio-visualizations/gauge-prod/index.css"
       }
     }]
   }
